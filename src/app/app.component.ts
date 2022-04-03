@@ -53,6 +53,20 @@ export class AppComponent {
      *  });
      */
 
+    this.configService.updateConfig({
+      layout: 'vertical',
+      navbar: {
+        position: 'in-toolbar'
+      },
+      sidenav: {
+        title: 'Solo-IT',
+        state: 'collapsed',
+      },
+      footer: {
+        visible: false
+      }
+    })
+
     /**
      * Config Related Subscriptions
      * You can remove this if you don't need the functionality of being able to enable specific configs with queryParams
