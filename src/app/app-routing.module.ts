@@ -1,23 +1,36 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CustomLayoutComponent } from './custom-layout/custom-layout.component';
+import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { VexRoutes } from "src/@vex/interfaces/vex-route.interface";
+import { CustomLayoutComponent } from "./custom-layout/custom-layout.component";
 
-const routes: Routes = [
+const routes: VexRoutes = [
   {
-    path: '',
+    path: "",
     component: CustomLayoutComponent,
-    children: []
-  }
+    children: [
+      {
+        path: "",
+        redirectTo: "products",
+        pathMatch: "full",
+      },
+      {
+        path: "products",
+        loadChildren: () =>
+          import("./products/products.module").then((m) => m.ProductsModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    // preloadingStrategy: PreloadAllModules,
-    scrollPositionRestoration: 'enabled',
-    relativeLinkResolution: 'corrected',
-    anchorScrolling: 'enabled'
-  })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      // preloadingStrategy: PreloadAllModules,
+      scrollPositionRestoration: "enabled",
+      relativeLinkResolution: "corrected",
+      anchorScrolling: "enabled",
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

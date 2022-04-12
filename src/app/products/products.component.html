@@ -1,0 +1,36 @@
+<div class="text-center py-24 header">
+  <div class="container">
+    <h2 @fadeInUp class="display-2 mt-16 mb-8">
+      {{ selectedProduct ? selectedProduct : "Select product" }}
+    </h2>
+
+    <div
+      @stagger
+      class="mt-24 -mb-16 mx-auto"
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutGap="24px"
+      fxLayoutGap.xs="16px"
+    >
+      <a
+        @fadeInUp
+        #rla="routerLinkActive"
+        *ngFor="let product of products"
+        [class.border-primary]="rla.isActive"
+        [routerLink]="product"
+        class="card block text-center p-6 hover:bg-app-bar trans-ease-out cursor-pointer relative no-underline text-dark border-2"
+        fxFlex
+        fxFlex.xs="auto"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        matRipple
+        routerLinkActive
+      >
+        <!-- <ic-icon [class.text-primary]="rla.isActive" [icon]="link.icon" class="text-hint" size="42px"></ic-icon> -->
+        <h3 class="title m-0">{{ product }}</h3>
+      </a>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
