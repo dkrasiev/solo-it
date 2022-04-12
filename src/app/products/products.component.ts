@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { of, Subscription } from "rxjs";
-import { filter, take } from "rxjs/operators";
+import { Subscription } from "rxjs";
+import { filter } from "rxjs/operators";
 import { fadeInUp400ms } from "src/@vex/animations/fade-in-up.animation";
 import { stagger80ms } from "src/@vex/animations/stagger.animation";
+import { Product } from "./product.model";
+import { ProductsService } from "./products.service";
 
 @Component({
   selector: "vex-products",
@@ -12,11 +14,15 @@ import { stagger80ms } from "src/@vex/animations/stagger.animation";
   animations: [fadeInUp400ms, stagger80ms],
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  products = ["Bitrix", "Мой Склад"];
+  products: Product[] = [];
   selectedProduct: number;
   sub: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private productService: ProductsService
+  ) {}
 
   ngOnInit(): void {
     this._getSelectedProduct();
@@ -27,13 +33,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this._getSelectedProduct();
       });
 
-    // this.route.firstChild.params.subscribe((params) => {
-    //   if (params["id"]) {
-    //     this.selectedProduct = +params["id"];
-    //   } else {
-    //     this.selectedProduct = null;
-    //   }
-    // });
+    this.products = this.productService.products;
   }
 
   ngOnDestroy(): void {

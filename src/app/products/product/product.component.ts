@@ -1,30 +1,36 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
+import { fadeInUp400ms } from "src/@vex/animations/fade-in-up.animation";
+import { stagger80ms } from "src/@vex/animations/stagger.animation";
+import { Offer } from "../offer.model";
+import { Product } from "../product.model";
+import { ProductsService } from "../products.service";
 
 @Component({
   selector: "vex-product",
   templateUrl: "./product.component.html",
   styleUrls: ["./product.component.scss"],
+  animations: [stagger80ms, fadeInUp400ms],
 })
 export class ProductComponent implements OnInit {
-  product: number;
-  options = [1, 3, 6, 12, 24, 36];
-  state;
+  product: Product;
+  selectedOffer: Offer;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.product = +params["id"];
+      this.selectedOffer = null;
+      this.product = this.productsService.products.find((product) => {
+        return product.name == params["id"];
+      });
     });
-
-    console.log(this.state);
   }
 
-  onValueChange({ source, value }) {
-    console.log(value);
-
-    this.state = value;
+  setOffer(offer: Offer) {
+    this.selectedOffer = offer;
   }
 }

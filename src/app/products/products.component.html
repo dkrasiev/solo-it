@@ -17,7 +17,7 @@
         #rla="routerLinkActive"
         *ngFor="let product of products"
         [class.border-primary]="rla.isActive"
-        [routerLink]="product"
+        [routerLink]="product.name"
         class="card block text-center p-6 hover:bg-app-bar trans-ease-out cursor-pointer relative no-underline text-dark border-2"
         fxFlex
         fxFlex.xs="auto"
@@ -27,7 +27,7 @@
         routerLinkActive
       >
         <!-- <ic-icon [class.text-primary]="rla.isActive" [icon]="link.icon" class="text-hint" size="42px"></ic-icon> -->
-        <h3 class="title m-0">{{ product }}</h3>
+        <h3 class="title m-0">{{ product.name }}</h3>
       </a>
     </div>
   </div>
